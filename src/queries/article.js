@@ -2,12 +2,12 @@ const connection = require("../db/connection");
 const sql = require("../queries/sql");
 
 module.exports = {
-  createArticle(title, description, price) {
+  createArticle(title, description, price, image) {
     let db = connection.createConn();
     return new Promise((resolve, reject) => {
       db.query(
         sql.createArticle,
-        [title, description, price],
+        [title, description, price, image],
         (err, result) => {
           if (err) reject(new Error());
           else resolve(result);

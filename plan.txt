@@ -1,0 +1,4 @@
+- jsonwebtoken 
+- user must ne unique
+- photo uplaod
+- payment

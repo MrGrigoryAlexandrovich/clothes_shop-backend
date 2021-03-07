@@ -1,17 +1,20 @@
 const express = require("express");
 const queries = require("../queries/article");
 const router = express();
+const upload = require("../photos/multer");
 
-router.post("/create", async (req, res) => {
+router.post("/create", upload.single("image"), async (req, res) => {
   let article = {
     title: req.body.title,
     description: req.body.description,
     price: req.body.price,
+    image: req.file.originalname,
   };
   let Article = await queries.createArticle(
     article.title,
     article.description,
-    article.price
+    article.price,
+    article.image
   );
   return res.sendStatus(201);
 });
