@@ -2,8 +2,9 @@ const express = require("express");
 const bcrypt = require("bcrypt");
 const queries = require("../queries/user");
 const router = express();
+const auth = require("../auth/auth");
 
-router.post("/create", async (req, res) => {
+router.post("/create", auth.authenticateToken, async (req, res) => {
   let user = {
     username: req.body.username,
     password: req.body.password,
@@ -27,24 +28,24 @@ router.post("/login", async (req, res) => {
   else {
     const match = await bcrypt.compare(user.password, User.password);
     if (match) {
-      return res.sendStatus(200);
+      return res.json(auth.generateAccessToken(user));
     } else return res.sendStatus(403);
   }
 });
-router.get("/users", async (req, res) => {
+router.get("/users", auth.authenticateToken, async (req, res) => {
   let users = await queries.getUsers();
   if (users.length == 0) return res.sendStatus(404);
   else return res.status(200).json(users);
 });
 
-router.get("/user/:id", async (req, res) => {
+router.get("/user/:id", auth.authenticateToken, async (req, res) => {
   let id = req.params.id;
   let user = await queries.getUserById(id);
   if (user == undefined) return res.sendStatus(404);
   else return res.status(200).json(user);
 });
 
-router.patch("/update/:id", async (req, res) => {
+router.patch("/update/:id", auth.authenticateToken, async (req, res) => {
   let user = {
     adminLevel: req.body.adminLevel,
     id: req.params.id,
@@ -54,7 +55,7 @@ router.patch("/update/:id", async (req, res) => {
   else return res.sendStatus(202);
 });
 
-router.delete("/delete/:id", async (req, res) => {
+router.delete("/delete/:id", auth.authenticateToken, async (req, res) => {
   let id = req.params.id;
   let result = await queries.deleteUser(id);
   if (result.affectedRows == 0) return res.sendStatus(404);
