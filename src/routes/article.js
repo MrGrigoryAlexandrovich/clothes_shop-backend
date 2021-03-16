@@ -3,11 +3,7 @@ const queries = require("../queries/article");
 const router = express();
 const upload = require("../photos/multer");
 const auth = require("../auth/auth");
-router.post(
-  "/create",
-  auth.authenticateToken,
-  upload.single("image"),
-  async (req, res) => {
+router.post("/create", auth.authenticateToken, upload.single("image"), async (req, res) => {
     let article = {
       title: req.body.title,
       description: req.body.description,
