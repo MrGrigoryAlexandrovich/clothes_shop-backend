@@ -1,6 +1,6 @@
 # clothes_shop-backend
-REST API for clothes-shop
+## REST API for clothes-shop
 
-##online shopping application
+## online shopping application
 
-##payment method in progress
+## payment method in progress
