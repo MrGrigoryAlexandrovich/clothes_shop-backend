@@ -1,1 +1,1 @@
-- payment
+- payment methods - maybe stripe 
