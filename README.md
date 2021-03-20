@@ -3,4 +3,4 @@
 
 ## online shopping application
 
-## payment method in progress
+## payment method in progress (stripe or 2checkout)
