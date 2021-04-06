@@ -17,13 +17,22 @@ router.post('/pay', (req, res) => {
         "payment_method": "paypal"
     },
     "redirect_urls": {
-        "return_url": config.return_url,
-        "cancel_url": config.cancel_url
+        "return_url": "http://localhost:3000/success",
+        "cancel_url": "http://localhost:3000/cancel"
     },
     "transactions": [{
+        "item_list": {
+            "items": [{
+                "name": "Red Sox Hat",
+                "sku": "001",
+                "price": "25.00",
+                "currency": "USD",
+                "quantity": 1
+            }]
+        },
         "amount": {
             "currency": "USD",
-            "total": req.body.price
+            "total": "25.00"
         },
         "description": "Hat for the best team ever"
     }]
@@ -52,7 +61,7 @@ router.get('/success', (req, res) => {
     "transactions": [{
         "amount": {
             "currency": "USD",
-            "total": req.body.price
+            "total": "25.00"
         }
     }]
   };
@@ -63,13 +72,11 @@ router.get('/success', (req, res) => {
         throw error;
     } else {
         console.log(JSON.stringify(payment));
-        res.end('Success');
+        res.send('Success');
     }
 });
 });
 
-router.get('/cancel', (req, res) => res.end('Cancelled'));
-
-
+router.get('/cancel', (req, res) => res.send('Cancelled'));
 
 module.exports =  router;
