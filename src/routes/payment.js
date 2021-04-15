@@ -32,7 +32,7 @@ router.post('/pay', (req, res) => {
         },
         "amount": {
             "currency": "USD",
-            "total": "25.00"
+            "total": req.body.price
         },
         "description": "Hat for the best team ever"
     }]
@@ -61,7 +61,7 @@ router.get('/success', (req, res) => {
     "transactions": [{
         "amount": {
             "currency": "USD",
-            "total": "25.00"
+            "total": req.body.price
         }
     }]
   };
